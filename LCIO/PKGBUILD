@@ -39,13 +39,13 @@ build() {
 }
 
 package() {
- echo "toto"
  cd "${srcdir}/${pkgname}/build"
  make install
+ mkdir -p ${pkgdir}/usr
  cd ${pkgdir}/usr
  mkdir -p ${pkgdir}/usr/lib/cmake/lcio
- sed -i '27s/.*/ SET( LCIO_ROOT "\/usr" ) /' LCIOConfig.cmake
- sed -i '6s/.*/ SET( LCIO_ROOT "\/usr" ) /' LCIOConfigVersion.cmake
- mv LCIOConfig.cmake ${pkgdir}/usr/lib/cmake/lcio
- mv LCIOConfigVersion.cmake ${pkgdir}/usr/lib/cmake/lcio
+ sed -i '27s/.*/ SET( LCIO_ROOT "\/usr" ) /' ${srcdir}/${pkgname}/LCIOConfig.cmake
+ sed -i '6s/.*/ SET( LCIO_ROOT "\/usr" ) /' ${srcdir}/${pkgname}/LCIOConfigVersion.cmake
+ mv ${srcdir}/${pkgname}/LCIOConfig.cmake ${pkgdir}/usr/lib/cmake/lcio
+ mv ${srcdir}/${pkgname}/LCIOConfigVersion.cmake ${pkgdir}/usr/lib/cmake/lcio
 }
