@@ -43,6 +43,12 @@ package() {
  make install
  mkdir -p ${pkgdir}/usr
  cd ${pkgdir}/usr
+ #mv ${srcdir}/${pkgname}/cmake ${pkgdir}/usr/lib/cmake
+ mv ${srcdir}/${pkgname}/lib ${pkgdir}/usr
+ mv ${srcdir}/${pkgname}/include ${pkgdir}/usr
+ mv ${srcdir}/${pkgname}/bin ${pkgdir}/usr
+ mv ${srcdir}/${pkgname}/python ${srcdir}/${pkgname}/python2.7
+ mv ${srcdir}/${pkgname}/python2.7 ${pkgdir}/usr/lib/python2.7
  mkdir -p ${pkgdir}/usr/lib/cmake/lcio
  sed -i '27s/.*/ SET( LCIO_ROOT "\/usr" ) /' ${srcdir}/${pkgname}/LCIOConfig.cmake
  sed -i '6s/.*/ SET( LCIO_ROOT "\/usr" ) /' ${srcdir}/${pkgname}/LCIOConfigVersion.cmake
