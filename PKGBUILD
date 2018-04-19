@@ -1,0 +1,51 @@
+# Maintainer: Lagarde François <f.lagarde@ipnl.in2p3.fr>
+pkgname=lcio-git
+pkgver=v02.12
+pkgrel=1
+epoch=
+pkgdesc="Linear Collider I/O"
+arch=('i686' 'x86_64')
+url="https://github.com/iLCSoft/LCIO"
+license=('BSD-3')
+#groups=()
+depends=('cmake')
+#makedepends=()
+#checkdepends=()
+optdepends=('root-extra>6.04' 'root-dev>6.04' 'root-extra-dev>6.04')
+#provides=()
+#conflicts=()
+#replaces=()
+#backup=()
+#options=()
+#install=
+#changelog=
+source=("$pkgname::git+https://github.com/iLCSoft/LCIO.git#branch=master")
+#noextract=()
+md5sums=("SKIP")
+#validpgpkeys=()
+
+prepare() {
+  cd "${srcdir}/${pkgname}"
+  CFLAGS="${CFLAGS} --std=c++1z" \
+  CXXFLAGS="${CXXFLAGS} --std=c++1z" \
+  mkdir -p build
+}
+
+build() {
+	cd "${srcdir}/${pkgname}/build"
+        sed -i '1s/^/set(CMAKE_CXX_STANDARD 17) \n set(CMAKE_CXX_STANDARD_REQUIRED ON) \n set(CMAKE_CXX_EXTENSIONS ON) /' ${srcdir}/${pkgname}/CMakeLists.txt
+	cmake -DBUILD_LCIO_EXAMPLES=ON -DBUILD_TESTING=OFF -DBUILD_ROOTDICT=ON -DBUILD_F77_TESTJOBS=OFF -DINSTALL_JAR=OFF ..
+	make -j4
+}
+
+package() {
+ echo "toto"
+ cd "${srcdir}/${pkgname}/build"
+ make install
+ cd ${pkgdir}/usr
+ mkdir -p ${pkgdir}/usr/lib/cmake/lcio
+ sed -i '27s/.*/ SET( LCIO_ROOT "\/usr" ) /' LCIOConfig.cmake
+ sed -i '6s/.*/ SET( LCIO_ROOT "\/usr" ) /' LCIOConfigVersion.cmake
+ mv LCIOConfig.cmake ${pkgdir}/usr/lib/cmake/lcio
+ mv LCIOConfigVersion.cmake ${pkgdir}/usr/lib/cmake/lcio
+}
