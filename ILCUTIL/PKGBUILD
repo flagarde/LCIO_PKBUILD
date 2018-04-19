@@ -39,18 +39,18 @@ package() {
  echo "toto"
  cd "${srcdir}/${pkgname}/build"
  make install
- mkdir -p ${pkgdir}/usr/lib/cmake
+ #mkdir -p ${pkgdir}/usr/lib/cmake
  mkdir -p ${pkgdir}/usr/lib/cmake/ILCUTIL
  #mkdir -p ${pkgdir}/usr/lib/cmake/ILCTEST
  #mkdir -p ${pkgdir}/usr/lib/cmake/ILCSOFT
  #mkdir -p ${pkgdir}/usr/lib/cmake/streamlog
  sed -i '14s/.*/ SET( ILCSOFT_CMAKE_MODULES_ROOT "\/usr\/lib\/cmake\/cmakemodules" ) /' "${srcdir}/${pkgname}/ILCSOFT_CMAKE_MODULESConfig.cmake"
- sed -i '15s/.*/ SET( ILCSOFT_CMAKE_MODULES_CONFIG "\/usr\/lib\/cmake\/ILCSOFT_CMAKE_MODULESConfig.cmake" ) /' "${srcdir}/${pkgname}/ILCSOFT_CMAKE_MODULESConfig.cmake"
+ sed -i '15s/.*/ SET( ILCSOFT_CMAKE_MODULES_CONFIG "\/usr\/lib\/cmake\/ILCUTIL\/ILCSOFT_CMAKE_MODULESConfig.cmake" ) /' "${srcdir}/${pkgname}/ILCSOFT_CMAKE_MODULESConfig.cmake"
  sed -i '13s/.*/ INCLUDE( "\/usr\/lib\/cmake\/cmakemodules\/MacroCheckPackageVersion.cmake" ) /' "${srcdir}/${pkgname}/ILCSOFT_CMAKE_MODULESConfigVersion.cmake"
  sed -i '19s/.*/ SET( ILCTEST_ROOT "\/usr" ) /' "${srcdir}/${pkgname}/ILCTESTConfig.cmake"
- sed -i '25s/.*/ INCLUDE( "\/usr\/lib\/cmake\/ILCSOFT_CMAKE_MODULESConfig.cmake" ) /' "${srcdir}/${pkgname}/ILCTESTConfig.cmake"
+ sed -i '25s/.*/ INCLUDE( "\/usr\/lib\/cmake\/ILCUTIL\/ILCSOFT_CMAKE_MODULESConfig.cmake" ) /' "${srcdir}/${pkgname}/ILCTESTConfig.cmake"
  sed -i '13s/.*/ INCLUDE( "\/usr\/lib\/cmake\/cmakemodules" ) /' "${srcdir}/${pkgname}/ILCTESTConfigVersion.cmake"
- sed -i '34s/.*/ SET( ILCUTIL_ROOT "\/usr" ) /' "${srcdir}/${pkgname}/ILCUTILConfig.cmake"
+ sed -i '34s/.*/ SET( ILCUTIL_ROOT "\/usr\/lib\/cmake\/ILCUTIL" ) /' "${srcdir}/${pkgname}/ILCUTILConfig.cmake"
  sed -i '13s/.*/ INCLUDE( "\/usr\/lib\/cmake\/cmakemodules\/MacroCheckPackageVersion.cmake" ) /' "${srcdir}/${pkgname}/ILCUTILConfigVersion.cmake"
  sed -i '16s/.*/ SET( streamlog_ROOT "\/usr" )/' "${srcdir}/${pkgname}/streamlogConfig.cmake"
  #sed -i '27s/.*/ SET( LCIO_ROOT "\/usr" ) /' "${srcdir}/${pkgname}/streamlogConfigVersion.cmake"
